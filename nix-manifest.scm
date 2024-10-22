@@ -1,4 +1,5 @@
-(use-modules (gnu) (guix utils))
+(use-modules (gnu) (guix utils) (guix packages))  ; Include (guix packages) for package definitions
+
 
 ;; Define variables at the top for easy management
 (define nix-version "2.13.3") ; Nix version
