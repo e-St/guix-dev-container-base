@@ -1,1 +1,1 @@
-guix container run --manifest=nix-manifest.scm
+guix shell --container --manifest=nix-manifest.scm
