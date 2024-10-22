@@ -6,15 +6,7 @@
 (define nix-sha256 "0v9ayxk2c5kmb9y5q0qplm2b8f7k8pbzq5h4d4fh0q7pxq2i5r5b") ; Nix SHA256
 (define shell-file "./shell.nix") ; Path to the shell.nix file
 
-(define nix-package
-  (package
-    (name "nix")
-    (version nix-version)
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "https://nixos.org/releases/nix/nix-" nix-version "/nix-" nix-version "-x86_64-linux.tar.gz"))
-              (sha256
-               (base32 nix-sha256))))))
+(define nix-package (specification->package "nix")) ; Get the Nix package
                
 (operating-system
   ;; Other configurations...
