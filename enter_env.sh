@@ -1,1 +1,1 @@
-guix shell --container --manifest=nix-manifest.scm
+guix shell --container --manifest=nix-manifest.scm -- bash -c "nix-shell ./shell.nix"
