@@ -1,15 +1,20 @@
 (use-modules (gnu) (guix utils))
 
+;; Define variables at the top for easy management
+(define nix-version "2.13.3") ; Nix version
+(define nix-sha256 "0v9ayxk2c5kmb9y5q0qplm2b8f7k8pbzq5h4d4fh0q7pxq2i5r5b") ; Nix SHA256
+(define shell-file "./shell.nix") ; Path to the shell.nix file
+
 (define nix-package
   (package
     (name "nix")
-    (version "2.13.3") ; Replace with the desired version
+    (version nix-version)
     (source (origin
               (method url-fetch)
-              (uri (string-append "https://nixos.org/releases/nix/nix-" version "/nix-" version "-x86_64-linux.tar.gz"))
+              (uri (string-append "https://nixos.org/releases/nix/nix-" nix-version "/nix-" nix-version "-x86_64-linux.tar.gz"))
               (sha256
-               (base32 "0v9ayxk2c5kmb9y5q0qplm2b8f7k8pbzq5h4d4fh0q7pxq2i5r5b"))))))
-
+               (base32 nix-sha256))))))
+               
 (operating-system
   ;; Other configurations...
   (services
@@ -20,6 +25,11 @@
                (nix-store "/var/guix/profiles/per-user/root/guix-profile")
                (nix-config "/etc/nix/nix.conf"))))))
 
-(let ((nix-shell "path/to/your/shell.nix")) ; Update with the correct path
-  (specifications
-   (list nix-package)))
+(specifications
+ (list nix-package))
+
+;; Custom command to run nix-shell automatically
+(operating-system
+   (name "my-container")
+   (services %base-services)
+   (command (string-append "bash -c \"nix-shell " shell-file "\"")))
